@@ -1,0 +1,131 @@
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+
+ <renderer type="PhotonMapping" maxdepth="4" scale="1.0"
+     globalphotonradius="1.0" nbglobalphotons="100000" nbglobalsamples="20"
+     causticphotonradius="20.0" nbcausticphotons="10000" nbcausticsamples="20"
+     nbsamples="10"  estimationdistance="0.05"
+  />
+  <camera filename="projects/DemoVirtuelium/images/Demo_Material_01.png" resx="700" resy="510" >
+    <geometry type="Perspective" 
+       fov="13.0"
+       originx="2.5"  originy="0.0" originz="0.255"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.255"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <!-- Before chromatic adaptation : refIllum -->
+    <!-- After chromatic adaptation : refIllumOut must be the same than the white point of the rgb profile -->
+    <!-- Method for chromatic adaptation : method = Scale | Bradford | VonKries | CIECAT02 -->
+<!--     <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+      refIllum="A" IllumOutX="1.02976" IllumOutY="1.0" IllumOutZ="0.7125" method="CIECAT02"
+    />
+ -->  
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+      refIllum="E" refIllumOut="D65"
+    />
+    </camera>
+  <medium name="default" indices="data/materials/glasses/Air.xml"/>
+  <medium name="gris" spectrum="projects/DemoVirtuelium/data/materials/cabine.xml" opaque="1"/>
+  <medium name="rouge" spectrum="data/materials/spectra/pigments/vermillon1.xml" opaque="1"/>
+  <medium name="rougeverni"  spectrum="data/materials/spectra/pigments/vermillon1.xml" indices="data/materials/glasses/sf11.xml" opaque="1"/>
+  <medium name="cuivre" indices="data/materials/metals/cu.xml" opaque="1"/>
+  <medium name="verre" indices="data/materials/glasses/sf11.xml" dispersion="0"/>
+  <medium name="chitine" indices="data/materials/glasses/Chitine.xml" />
+  <medium name="aragonite" indices="data/materials/glasses/Aragonite.xml" />
+  <medium name="chitineg" indices="data/materials/glasses/Chitine.xml" opaque="1" />
+  <medium name="white" spectrum="data/materials/spectra/white.xml" />
+
+  <!-- Box -->
+  <surface name="Remibox_back">
+    <geometry type="OBJ" file="data/meshes/remibox/back.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_ceil">
+    <geometry type="OBJ" file="data/meshes/remibox/ceil.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_floor">
+    <geometry type="OBJ" file="data/meshes/remibox/floor.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_left">
+    <geometry type="OBJ" file="data/meshes/remibox/left.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_right">
+    <geometry type="OBJ" file="data/meshes/remibox/right.obj"   />
+    <medium name="gris"/>
+  </surface>
+
+  <!-- Echantillons -->
+  <surface name="Lambertian Sample">
+    <geometry type="Sphere" radius="0.05" centery="-0.30" centerz="0.05" />   
+    <material type="Layered" roughness="0.9" />
+    <medium name="rouge"/>
+  </surface>
+
+  <surface name="Lambertian Sample">
+    <geometry type="Sphere" radius="0.05" centery="-0.20" centerz="0.05" />
+    <medium name="rouge"/>
+  </surface>
+
+  <surface name="Varnished Lambertian Sample">
+    <geometry type="Sphere" radius="0.05" centery="-0.10" centerz="0.05" />
+    <medium name="rougeverni"/>
+  </surface>
+
+  <surface name="Metallic rougth Sample">
+    <geometry type="Sphere" radius="0.05" centery="0.00" centerz="0.05" />
+    <material type="Layered" roughness="0.2" />
+    <medium name="cuivre"/>
+  </surface>
+
+  <surface name="Metallic Sample">
+    <geometry type="Sphere" radius="0.05" centery="0.10" centerz="0.05" />
+    <medium name="cuivre"/>
+  </surface>
+
+  <surface name="Dielectric Sample">
+    <geometry type="Sphere" radius="0.05" centery="0.20" centerz="0.05" />
+    <medium name="verre"/>
+  </surface>
+
+  <surface name="Pearlecent Sample">
+    <geometry type="Sphere" radius="0.05" centery="0.30" centerz="0.05" />
+    <material type="Layered" roughness="0.2">
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>      
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+      <layer medium="chitine" thickness="100E-9"/>
+      <layer medium="default" thickness="100E-9"/>
+    </material>
+    <medium name="chitineg"/>
+  </surface>
+
+  <!-- Source -->
+  <source name="Light">
+    <geometry type="OBJ" file="data/meshes/remibox/light.obj"   />
+    <source type="Plane"
+      spectrum="data/colorimetry/illuminants/A.xml" power="750"
+      ox="0.195" oy="-0.31" oz="0.47"
+      ux="0.39" vy="0.62" normalx="-1.0"
+      samples="30"
+    />
+  </source>
+</scenery>

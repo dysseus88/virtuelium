@@ -1,0 +1,52 @@
+<!--Default scenery, modify and enjoy it ;) -->
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+
+ <!-- Texture declaration -->
+ <texture name="envir" file="projects/DemoVirtuelium/data/textures/dusk.png"/>
+
+ <renderer type="PhotonMapping" scale="1.0" maxDepth="3.0">
+   <environment type="Spherical" name="envir" envpower="1" />
+   <!--<environment type="Spectral" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" envpower="3.0" />-->
+ </renderer>
+
+  <camera filename="projects/DemoVirtuelium/images/Demo_Environment_01.png" resx="500" resy="500" >
+    <geometry type="Perspective" 
+       fov="30.0"
+       originx="7.0"  originy="0.0" originz="0.0"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.0"
+       upx="0.0"      upy="-1.0"     upz="0.0"
+    />
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+    />
+  </camera>
+
+  <medium name="gris" spectrum="projects/DemoVirtuelium/data/materials/cabine.xml" opaque="true"/>
+  <medium name="white" spectrum="data/materials/spectra/white.xml" opaque="true"/>
+  <medium name="black" spectrum="data/materials/spectra/black.xml" opaque="true"/>
+  <medium name="whitevernis" spectrum="data/materials/spectra/white.xml" indices="data/materials/glasses/sf11.xml" opaque="1"/>
+  <medium name="vernis" indices="data/materials/glasses/sf11.xml" opaque="0"/>
+  <medium name="or" indices="data/materials/metals/au.xml" opaque="true" />
+  <medium name="bleu" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" opaque="true"/>
+  <medium name="bleuverni" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" indices="data/materials/glasses/sf11.xml" opaque="1"/>
+  <medium name="rouge" spectrum="data/materials/spectra/pigments/vermillon1.xml" opaque="1"/>
+  <medium name="rougeverni"  spectrum="data/materials/spectra/pigments/vermillon1.xml" indices="data/materials/glasses/sf11.xml" opaque="1"/>
+  <medium name="TerreVerte" pigments="data/materials/pigments/TerreVerte.xml" />
+  <medium name="Vermillon" pigments="data/materials/pigments/Vermillon.xml" />
+  <medium name="cuivre" indices="data/materials/metals/cu.xml" opaque="1"/>
+
+  <surface name="suzanne">
+    <geometry type="OBJ" file="projects/DemoVirtuelium/data/meshes/suzanne.obj" />
+    <medium name="or" />
+  </surface>
+
+  <!-- Source -->
+  <source>
+    <geometry type="Sphere" centerx="10.0" centery="0.0" centerz="0.0" radius="0.1" />
+    <source type="Point" originx="10.0" originy="0.0" originz="0.0" radius="0.1" spectrum="data/colorimetry/illuminants/D65.xml" power="8E5" />
+  </source>
+</scenery>
+
+
+

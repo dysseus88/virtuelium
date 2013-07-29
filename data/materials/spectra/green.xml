@@ -1,0 +1,33 @@
+<material type="Spectral">
+  <entry wavelength="400" value="0.207400" />
+  <entry wavelength="410" value="0.233100" />
+  <entry wavelength="420" value="0.246900" />
+  <entry wavelength="430" value="0.261300" />
+  <entry wavelength="440" value="0.277300" />
+  <entry wavelength="450" value="0.298900" />
+  <entry wavelength="460" value="0.329600" />
+  <entry wavelength="470" value="0.361700" />
+  <entry wavelength="480" value="0.384200" />
+  <entry wavelength="490" value="0.396200" />
+  <entry wavelength="500" value="0.398400" />
+  <entry wavelength="510" value="0.394400" />
+  <entry wavelength="520" value="0.386900" />
+  <entry wavelength="530" value="0.373600" />
+  <entry wavelength="540" value="0.354600" />
+  <entry wavelength="550" value="0.328500" />
+  <entry wavelength="560" value="0.296200" />
+  <entry wavelength="570" value="0.262200" />
+  <entry wavelength="580" value="0.225300" />
+  <entry wavelength="590" value="0.188600" />
+  <entry wavelength="600" value="0.157600" />
+  <entry wavelength="610" value="0.137500" />
+  <entry wavelength="620" value="0.127700" />
+  <entry wavelength="630" value="0.122800" />
+  <entry wavelength="640" value="0.120000" />
+  <entry wavelength="650" value="0.118900" />
+  <entry wavelength="660" value="0.121300" />
+  <entry wavelength="670" value="0.127400" />
+  <entry wavelength="680" value="0.135800" />
+  <entry wavelength="690" value="0.144300" />
+  <entry wavelength="700" value="0.151200" />
+</material>

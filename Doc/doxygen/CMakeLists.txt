@@ -1,0 +1,71 @@
+
+MESSAGE(STATUS "Available doxygen for ${PROJECT_NAME}")
+
+SET(${PROJECT_NAME}_DOX_DOXY_DIR ${${PROJECT_NAME}_SRC_DOXY_DIR}/dox)
+SET(${PROJECT_NAME}_IMAGES_DOXY_DIR ${${PROJECT_NAME}_SRC_DOXY_DIR}/image)
+
+#FIND_PACKAGE(Doxygen)
+
+# We use Doxygen to extract inline reference documentation from the
+# source code in XML format. This command also finds the dot program
+# of the Graphviz package to render class inheritance diagrams.
+find_package(Doxygen QUIET)
+if(NOT DOXYGEN_FOUND)
+  message(WARNING "Unable to find Doxygen documentation generator")
+  set(GENERATE_DOC FALSE)
+endif(NOT DOXYGEN_FOUND)
+
+
+SET(DOXYGEN_SRC_PATH "${${PROJECT_NAME}_SRC_DOXY_DIR}")
+SET(DOXYFILE_IMAGES_DIR "${${PROJECT_NAME}_IMAGES_DOXY_DIR}")
+SET(DOXYFILE_PROJECT_NAME "${PROJECT_NAME}")
+SET(DOXYFILE_PROJECT_NUMBER "${${PROJECT_NAME}_VERSION}")
+SET(DOXYFILE_PROJECT_BRIEF "${${PROJECT_NAME}_ALIAS}")
+SET(DOXYFILE_PROJECT_LOGO "${DOXYFILE_IMAGES_DIR}/logo.png")
+SET(DOXYFILE_PROJECT_RELEASE_DATE "${${PROJECT_NAME}_RELEASE}")
+
+
+SET(DOXYFILE_SOURCE_DIR "") #${CMAKE_MAIN_DIR}/include
+SET(DOXYFILE_EXTRA_SOURCES "")
+SET(DOXYFILE_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/${SOURCE_NAME}/${HEADER_DIRNAME}")
+SET(DOXYFILE_DOX_SOURCES "${${PROJECT_NAME}_DOX_DOXY_DIR}")
+
+SET(DOXYFILE_OUTPUT_DIR "${${PROJECT_NAME}_BIN_DOXY_DIR}")
+
+#LATEX
+
+SET(DOXYFILE_LATEX_DIR latex)
+
+
+SET(COMPILATION_OPTION LATEX PDFLATEX DOT XML RTF MAN)
+SET(COMPILATION_OPTION_DIR matex pdflatex dot xml rtf man)
+
+FOREACH(name_option ${COMPILATION_OPTION})
+  OPTION(DOXYFILE_${name_option} "Generate doxygen documentation to ${name_option}" OFF)
+
+  IF(DOXYFILE_${name_option})
+    SET(DOXYFILE_${name_option} "YES")
+  ELSE()
+    SET(DOXYFILE_${name_option} "NO")
+  ENDIF(DOXYFILE_${name_option})
+ENDFOREACH(name_option ${COMPILATION_OPTION})
+
+SET(DOXYFILE_LATEX_DIR latex)
+SET(DOXYFILE_HTML_DIR html)
+SET(DOXYFILE_XML_DIR xml)
+SET(DOXYFILE_RTF_DIR rtf)
+SET(DOXYFILE_MAN_DIR man)
+
+
+#XML
+IF(${PROJECT_NAME}_BUILD_DOCS_SPHINX AND NOT DOXYFILE_XML)
+  MESSAGE(WARNING "Sphinx requires doxygen xml output, it will be generated")
+ENDIF(${PROJECT_NAME}_BUILD_DOCS_SPHINX AND NOT DOXYFILE_XML)
+
+SET(DOXYFILE_EXAMPLES_DIR "${CMAKE_MAIN_DIR}/example")
+
+INCLUDE(${${PROJECT_NAME}_SRC_DOXY_DIR}/Doxygen.cmake)
+
+CONFIGURE_FILE(${DOXYGEN_SRC_PATH}/mainpage.dox.cmake
+               ${${PROJECT_NAME}_DOX_DOXY_DIR}/mainpage.dox)
+

@@ -1,0 +1,73 @@
+<!--Default scenery, modify and enjoy it ;) -->
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="PhotonMapping" scale="1.0" maxdepth="4" 
+    globalphotonradius="1.0" nbglobalphotons="3000" nbglobalsamples="60"
+    causticphotonradius="1.0" nbcausticphotons="10" nbcausticsamples="10"
+    nbsamples="100"
+  />
+  <camera filename="projects/MYPROJECT/images/MYPROJECT.png">
+    <geometry type="Perspective" 
+       resx="100"     resy="100"
+       fov="45.0"
+       originx="0.9"  originy="0.0" originz="0.5"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.1"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler type="CIE" refobserver="data/observers/cie-xyz.xml" conversionmat="data/observers/cie-xyz-to-rgb D65.txt"/>
+  </camera>
+
+  <medium name="or" indices="data/materials/metals/au.xml" opaque="true" />
+  <medium name="ceruse" spectrum="data/materials/spectra/pigments/ceruse.xml" />
+
+  <surface name="Metal sphere">
+    <geometry type="Sphere" radius="0.2" centerx="0.0" centery="0.0" centerz="0.0"/>
+    <medium name="or" />
+  </surface>
+
+  <!-- Box -->
+  <surface name="Ground">
+    <geometry type="Plane" originx="-1" originy="-1" originz="0.0"
+                       ux="2" uy="0" uz="0" vx="0" vy="2" vz="0"
+                       normalx="0" normaly="0" normalz="1.0"    />
+    <medium name="ceruse" />
+  </surface>
+  <surface name="Ceil">
+    <geometry type="Plane" originx="-1" originy="-1" originz="1.0"
+                       ux="2" uy="0" uz="0" vx="0" vy="2" vz="0"
+                       normalx="0" normaly="0" normalz="-1.0"    />
+    <medium name="ceruse" />
+  </surface>
+  <surface name="FrontWall">
+    <geometry type="Plane" originx="1" originy="-1" originz="0.0"
+                       ux="0" uy="0" uz="1" vx="0" vy="2" vz="0"
+                       normalx="-1.0" normaly="0" normalz="0"    />
+    <medium name="ceruse" />
+  </surface>
+  <surface name="BackWall">
+    <geometry type="Plane" originx="-1" originy="-1" originz="0.0"
+                       ux="0" uy="0" uz="1" vx="0" vy="2" vz="0"
+                       normalx="1.0" normaly="0" normalz="0"    />
+    <medium name="ceruse" />
+  </surface>
+  <surface name="LeftWall">
+    <geometry type="Plane" originx="-1" originy="-1" originz="0.0"
+                       ux="2" uy="0" uz="0" vx="0" vy="0" vz="1"
+                       normalx="0" normaly="1.0" normalz="0"    />
+    <medium name="ceruse" />
+  </surface>
+  <surface name="RightWall">
+    <geometry type="Plane" originx="-1" originy="1" originz="0.0"
+                       ux="2" uy="0" uz="0" vx="0" vy="0" vz="1"
+                       normalx="0" normaly="-1.0" normalz="0"    />
+    <medium name="ceruse" />
+  </surface>
+
+  <!-- Source -->
+  <source>
+    <geometry type="Sphere" centerz="0.9" radius="0.1" />
+    <source type="Point" originx="0.0" originy="0.0" originz="0.9" radius="0.1" spectrum="data/illuminants/D65.xml" power="400" />
+  </source>
+</scenery>
+
+
+

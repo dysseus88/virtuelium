@@ -1,0 +1,65 @@
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="PhotonMapping" scale="1.0" maxdepth="3" 
+     globalphotonradius="0.3" nbglobalphotons="80000" nbglobalsamples="20"
+     causticphotonradius="0.5" nbcausticphotons="100000" nbcausticsamples="200"
+     nbsamples="10"  estimationdistance="0.4"
+  />
+  <camera filename="projects/DemoVirtuelium/images/CausticDemo.png" resx="2000" resy="1000">
+    <geometry type="Perspective" 
+       fov="8.0"
+       originx="20.0"  originy="-0.5" originz="4.0"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.5"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE"
+      refobserver="data/observers/cie-xyz.xml"
+      conversionmat="data/observers/cie-xyz-to-rgb.txt"
+    />
+  </camera>
+
+  <medium name="default" indices="data/materials/glasses/Air.xml"/>
+  <medium name="sol" spectrum="data/materials/spectra/white.xml"/>
+  <medium name="verre" indices="data/materials/glasses/sf11.xml"/>
+
+  <!-- Sol -->
+  <surface name="Sol">
+    <geometry type="Plane"
+      originx="-1.0" originy="-2.0" originz="0.0"
+      normalx="0.0"  normaly="0.0"  normalz="1.0"
+      ux="2.0" uy="0.0" uz="0.0"
+      vx="0.0" vy="4.0" vz="0.0"
+      finite="1"
+    />
+    <medium name="sol"/>
+  </surface>
+
+  <!-- Elements -->
+  <surface name="Masque">
+    <geometry type="Plane"
+      originx="-0.5" originy="-1.5" originz="0.2"
+      normalx="0.0"  normaly="0.0"  normalz="1.0"
+      ux="1.0" uy="0.0" uz="0.0"
+      vx="0.0" vy="1.0" vz="0.0"
+      finite="1"
+    />
+    <medium name="default"/>
+    <medium name="default"/>
+  </surface>
+
+  <surface name="Sphère">
+    <geometry type="Sphere" centerx="0.0" centery="1.0" centerz="0.5" radius="0.5" />
+    <medium name="verre"/>
+  </surface>
+
+  <!-- Source -->
+  <source name="DirectionnalLight">
+    <geometry type="Null" />
+    <source type="Directionnal"
+      spectrum="projects/DemoVirtuelium/data/illuminants/CabineD65.xml" power="1000"
+      directionx="0.0" directiony="0.0" directionz="-1.0"
+      ox="-1.0" oy="-2.0" oz="4"
+      ux="2.0" uy="0.0" uz="0.0" vx="0.0" vy="4.0" vz="0.0"
+    />
+  </source>
+</scenery>

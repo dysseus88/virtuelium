@@ -1,0 +1,11 @@
+<material type="Dielectric">
+  <entry wavelength="354.240509" n="1.690000" k="3.440000" />
+  <entry wavelength="413.280609" n="2.300000" k="4.160000" />
+  <entry wavelength="442.800659" n="2.730000" k="4.420000" />
+  <entry wavelength="476.862244" n="3.250000" k="4.770000" />
+  <entry wavelength="516.600708" n="3.940000" k="5.080000" />
+  <entry wavelength="563.564392" n="494.000000" k="5.160000" />
+  <entry wavelength="619.920898" n="4.670000" k="4.670000" />
+  <entry wavelength="688.801025" n="6.890000" k="3.700000" />
+  <entry wavelength="774.901062" n="6.750000" k="2.910000" />
+</material>

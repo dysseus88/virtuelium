@@ -1,0 +1,12 @@
+syntax: glob
+
+*.pyc
+bin
+lib
+include
+dist
+build
+odt2sphinx.egg-info
+
+tests
+

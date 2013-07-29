@@ -1,0 +1,120 @@
+UTILISATION DE CMAKE
+================================================================================
+
+Téléchargement : http://www.cmake.org/cmake/resources/software.html
+
+================================================================================
+== Arborescence du projet
+================================================================================
+VIRTUELIUM_XXX (répertoire racine; XXX peut d'une version à l'autre)
+ |_Bin
+     où seront créés les exécutables avant d'être copiés à la racine
+ |_buildlinux32
+ |_buildlinux64
+ |_buildwin32
+ |_buildwin64
+     où générer le projet avec cmake
+ |_Cmake
+     contient des fichiers utilitaires cmake, notamment Version.cmake pour
+     changer la version du joliciel si besoin
+ |_Common
+     contient des typedef, structures et fonctions communes au reste du code
+ |_data
+     contient les données physiques de bases utilisables par tous les projets
+ |_Doc
+     contient la documentation du joliciel
+ |_projects
+     chaque projet a ses propres données physiques, maillages, textures etc...
+ |_python
+     contient les fichiers requis par les scripts python (Soleil etc...)
+ |_ThirdParties 
+     contient les librairies externes 
+ |_sources
+   |_include
+   |_src
+   
+ Les répertoires importants pour la compilation disposent chacun d'un fichier
+ CMakeLists.txt dans lesquel sont écrits les instructions cmake. Parmi ces 
+ fichiers, le plus important est celui se trouvant au niveau du répertoire 
+ racine car c'est lui qui appelle tous les autres.
+
+================================================================================
+== Préalable
+================================================================================
+ Installer mpich2 (http://www.mpich.org/)
+  
+================================================================================
+== Génération du projet avec cmake
+================================================================================
+1. Ouvrir cmake-gui
+
+2. Choisir le répertoire racine comme répertoire source (VIRTUELIUM_XXX)
+   Ce doit être un chemin absolu
+
+3. Choisir le répertoire buildxxx comme répertoire build; dépend de votre config
+   Ce doit être un chemin absolu
+   
+IMPORTANT : si vous devez changer l'un des chemins ci-avant en cours de route, 
+il faut supprimer le cache de cmake avant toute nouvelle opération
+(File > Delete Cache) 
+   
+4. Cliquer sur 'Configure'
+   La première fois, un environnement de compilation vous est demandé. 
+   Les suivants sont conseillés :
+    - Unix Makefile (linux 32 & 64 bits)
+    - Visual Studio 2010 (windows 32 bits)
+    - Visual Studio 2010 win64 (windows 64 bits)
+   Remarque : la personalisation du compilateur est possible à ce niveau 
+   (voir l'interface)
+   
+5. Tout doit bien se passer
+
+6. Changer les options du cmake (apparaissant dans le cadre supérieur)
+   ex 1: Changer le niveau de warning à la compilation 
+
+   IMPORTANT : pour windows, il est impératif de sélectionner la bonne 
+   architecture afin que le linkage vers les third parties puisse se faire 
+   proprement.
+   
+   Si des options ont été modifiés, reconfigurer de nouveau le projet.
+   Chaque option changé par la suite demande de reconfigurer
+   
+7. Une fois la configuration souhaitée obtenue, cliquer sur 'Generate'
+
+================================================================================
+== Options utiles
+================================================================================
+
+======= Général
+
+virtuelium_BUILD_DOC: 
+  Générer la documentation doxygen et Sphinx
+  Nécessite de reconfigurer an choisissant de sous-options (formats de sortie)
+
+virtuelium_PRECISION: 
+  Simple ou double précision pour les valeurs des nombres flottants 
+  Pas encore pleinement implémenté
+  
+======= Visual Studio (MSVC)
+
+virtuelium_ARCH:
+virtuelium_WARNING: 
+virtuelium_WERROR: 
+
+======= Visual Studio (MSVC)
+CMAKE_BUILD_TYPE:
+virtuelium_WALL: 
+virtuelium_WEXTRA: 
+virtuelium_PEDANTIC:: 
+virtuelium_WERROR: 
+
+================================================================================
+== Problèmes connus
+================================================================================
+Lors du lancement en ligne de commande, le message d'erreur apparaît (sous windows) :
+ "Impossible de démarrer car il manque xxx.dll" 
+Ou xxx représente une librairie tierce utilisée par virtuelium
+
+La solution consiste à copier-coller les DLLs qui se trouvent dans le répertoire 
+	ThirdParty/<votre_architecture>/DevIL/lib
+Dans le répertoire racine, donc au niveau des fichiers exécutables.

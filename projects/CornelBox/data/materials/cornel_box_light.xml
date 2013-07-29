@@ -1,0 +1,6 @@
+<material type="Spectral">
+  <entry wavelength="300.0" value="0.78"/>
+  <entry wavelength="800.0" value="0.78"/>
+</material>
+
+

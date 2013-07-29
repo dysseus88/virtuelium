@@ -1,0 +1,78 @@
+<!-- The cornel Box -->
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="PhotonMapping" scale="1E-1" maxdepth="4" 
+     globalphotonradius="1.0" nbglobalphotons="10000" nbglobalsamples="10"
+     causticphotonradius="1.0" nbcausticphotons="10000" nbcausticsamples="10"
+     nbsamples="10" estimationdistance="0.5"
+  />
+  <camera resx="1000" resy="1000" filename="projects/CornelBox/images/CornelBox4.png">
+    <geometry type="Perspective" 
+       fov="38"
+       originx="2.78"  originy="2.73" originz="-8.0"
+       lookatx="2.78"  lookaty="2.73" lookatz="0.0"
+       upx="0.0"      upy="1.0"     upz="0.0"
+    />
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+    />
+  </camera>
+
+  <medium name="air" indices="data/materials/glasses/Air.xml" />
+  <medium name="white" spectrum="projects/CornelBox/data/materials/cornel_box_white.xml" />
+  <medium name="red" spectrum="projects/CornelBox/data/materials/cornel_box_red.xml" />
+  <medium name="green" spectrum="projects/CornelBox/data/materials/cornel_box_green.xml" />
+  <medium name="whitet" spectrum="projects/CornelBox/data/materials/cornel_box_white.xml" transmittance="projects/CornelBox/data/materials/cornel_box_whitet.xml"/>
+  <medium name="metal" indices="data/materials/metals/al.xml" opaque="1" />  
+
+  <!-- Box -->
+  <surface name="Floor">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/floor.obj"/>
+    <material type="Layered" roughness="0.4" />
+    <medium name="white" />
+  </surface>
+
+  <surface name="Ceiling">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/ceiling.obj"/>
+    <medium name="white" />
+  </surface>
+
+  <surface name="Backwall">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/backwall.obj"/>
+    <medium name="white" />
+  </surface>
+
+  <surface name="Rightwall">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/rightwall.obj"/>
+    <medium name="green" />
+  </surface>
+
+  <surface name="Leftwall">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/leftwall.obj"/>
+    <medium name="red" />
+  </surface>
+
+  <surface name="Short Block">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/shortblock.obj"/>
+    <medium name="white" />
+  </surface>
+
+  <surface name="Tall Block">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/tallblock.obj"/>
+    <medium name="metal" />
+  </surface>
+
+  <!-- Source -->
+  <source name="Plafonnier">
+    <geometry type="OBJ" file="projects/CornelBox/data/meshes/light.obj"/>
+    <source type="Plane"
+      spectrum="projects/CornelBox/data/illuminants/cornel_box.xml" power="20000"
+      ox="2.130" oy="5.300" oz="2.270"
+      ux="1.300" vz="1.050" normaly="-1"
+      samples="30"
+    />
+  </source>
+</scenery>
+
+
+

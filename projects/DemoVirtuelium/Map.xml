@@ -1,0 +1,55 @@
+<!--Default scenery, modify and enjoy it ;) -->
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+
+  <renderer type="SimpleRenderer" maxdepth="4" scale="1.0" />
+  
+  <camera filename="projects/DemoVirtuelium/images/Demo_Map_01.png" resx="1000" resy="1000" >
+    <geometry type="Perspective" 
+       fov="30.0"
+       originx="0.9"  originy="0.0" originz="0.5"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.2"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+    />
+  </camera>
+
+  <medium name="gris" spectrum="projects/DemoVirtuelium/data/materials/cabine.xml" opaque="true"/>
+  <medium name="white" spectrum="data/materials/spectra/white.xml" opaque="true"/>
+  <medium name="or" indices="data/materials/metals/au.xml" opaque="true" />
+  <medium name="bleu" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" opaque="true"/>
+
+  <surface name="Earth">
+    <geometry type="Rotate" angle="120">
+      <geometry type="NormalMap" map="projects/DemoVirtuelium/data/textures/earth-normal.jpg" global="false">
+        <geometry type="Sphere" radius="0.2" centerx="0.0" centery="0.0" centerz="0.2"/>
+      </geometry>
+    </geometry>
+    <material type="Mapped">
+      <material type="Layered" map="projects/DemoVirtuelium/data/textures/earth-lands.png">
+        <layer medium="gris" thickness="5E-3"/>
+      </material>
+      <material type="Layered" map="projects/DemoVirtuelium/data/textures/earth-water.png">
+        <layer medium="or" thickness="5E-3" />        
+      </material>      
+    </material>
+    <medium name="gris" />
+  </surface>
+
+  <!-- Box -->
+  <surface name="Ground">
+    <geometry type="Sphere" radius="2.0"/>
+    <medium name="gris" />
+  </surface>
+
+  <!-- Source -->
+  <source>
+    <geometry type="Sphere" centerx="0.9" centery="0.9" centerz="0.9" radius="0.1" />
+    <source type="Point" originx="0.9" originy="0.9" originz="0.9" radius="0.1" spectrum="data/colorimetry/illuminants/D65.xml" power="20000" />
+  </source>
+</scenery>
+
+
+

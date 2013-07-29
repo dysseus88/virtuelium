@@ -1,0 +1,4 @@
+<material type="Dielectric">
+  <entry wavelength="280.000000" n="1.001000" />
+  <entry wavelength="780.000000" n="1.001000" />
+</material>

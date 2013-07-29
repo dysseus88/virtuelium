@@ -1,0 +1,96 @@
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="PhotonMapping" scale="1.0" maxdepth="3" 
+     globalphotonradius="0.3" nbglobalphotons="20000" nbglobalsamples="20"
+     causticphotonradius="0.5" nbcausticphotons="100000" nbcausticsamples="60"
+     nbsamples="20"  estimationdistance="0.2"
+  />
+  <camera filename="projects/DemoVirtuelium/images/LightDemo.png" resx="1000" resy="1000">
+    <geometry type="Perspective" 
+       fov="16.0"
+       originx="20.0"  originy="2.0" originz="1.8"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.0"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE"
+      refobserver="data/observers/cie-xyz.xml"
+      conversionmat="data/observers/cie-xyz-to-rgb.txt"
+      white="projects/DemoVirtuelium/data/illuminants/CabineD65.xml"
+    />
+  </camera>
+
+  <medium name="default" indices="data/materials/glasses/Air.xml"/>
+  <medium name="boite" spectrum="data/materials/spectra/pigments/ceruse.xml" opaque="1"/>
+  <medium name="metal" indices="data/materials/metals/al.xml" opaque="1"/>
+
+  <!-- Box -->
+
+  <surface name="Box">
+    <geometry type="OBJ" file="projects/DemoVirtuelium/data/meshes/lightdemo-box.obj"   />
+    <medium name="boite"/>
+  </surface>
+
+  <surface name="Temoin1">
+    <geometry type="Sphere"  radius="0.5" centerx="-0.5" centery="-2.0" centerz="1.0" />
+    <medium name="metal"/>
+  </surface>
+
+  <surface name="Temoin2">
+    <geometry type="Sphere"  radius="0.5" centerx="-0.5" centery="1.0" centerz="1.0" />
+    <medium name="metal"/>
+  </surface>
+
+  <surface name="Temoin3">
+    <geometry type="Sphere"  radius="0.5" centerx="-0.5" centery="-2.0" centerz="-2.0" />
+    <medium name="metal"/>
+  </surface>
+
+  <surface name="Temoin4">
+    <geometry type="Sphere"  radius="0.5" centerx="-0.5" centery="1.0" centerz="-2.0" />
+    <medium name="metal"/>
+  </surface>
+
+  <!-- Source -->
+  <source name="PlaneLight">
+    <geometry type="Plane"
+      originx="-0.5" originy="-2.0" originz="2.49"
+      normalx="0.0"  normaly="0.0"  normalz="-1.0"
+      ux="1.0" uy="0.0" uz="0.0"
+      vx="0.0" vy="1.0" vz="0.0"
+      finite="1"
+    />
+    <source type="Plane"
+      spectrum="projects/DemoVirtuelium/data/illuminants/CabineD65.xml" power="1000"
+      ox="-0.5" oy="-2.0" oz="2.49"
+      ux="1.0" vy="1.0" normalz="-1"
+      samples="30"
+    />
+  </surface>
+
+  <source name="DirectionnalLight">
+    <geometry type="Null" />
+    <source type="Directionnal"
+      spectrum="projects/DemoVirtuelium/data/illuminants/CabineD65.xml" power="1000"
+      directionx="0.0" directiony="0.0" directionz="-1.0"
+      ox="-0.5" oy="1.0" oz="3.5"
+      ux="1.0" uy="0.0" uz="0.0" vx="0.0" vy="1.0" vz="0.0"
+    />
+  </surface>
+
+  <source name="SurfaceLight">
+    <geometry type="Null" />
+    <source type="Surface"
+      spectrum="projects/DemoVirtuelium/data/illuminants/CabineD65.xml" power="1000"
+      normalz="-1"
+      ox="0.0" oy="-1.5" oz="-0.7"
+    />
+  </surface>
+
+  <source name="PointLight">
+    <geometry type="Sphere" radius="0.1" centerx="0.0" centery="1.5" centerz="-0.7" />
+    <source type="Point" radius="0.1"
+      spectrum="projects/DemoVirtuelium/data/illuminants/CabineD65.xml" power="1000"
+      originx="0.0" originy="1.5" originz="-0.7"
+    />
+  </surface>
+</scenery>

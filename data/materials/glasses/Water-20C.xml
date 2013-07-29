@@ -1,0 +1,7 @@
+<!-- Liquide water at 20°C -->
+<material type="Dielectric">
+  <entry wavelength="404.7" n="1.342" />
+  <entry wavelength="501.6" n="1.336" />
+  <entry wavelength="589.3" n="1.333" />
+  <entry wavelength="706.5" n="1.330" />
+</material>

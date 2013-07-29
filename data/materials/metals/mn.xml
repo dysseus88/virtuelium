@@ -1,0 +1,26 @@
+<material type="Dielectric">
+  <entry wavelength="292.399994" n="1.850000" kappa="1.157000" />
+  <entry wavelength="300.899994" n="1.860000" kappa="1.177000" />
+  <entry wavelength="310.700012" n="1.860000" kappa="1.210000" />
+  <entry wavelength="320.399994" n="1.860000" kappa="1.247000" />
+  <entry wavelength="331.500000" n="1.860000" kappa="1.280000" />
+  <entry wavelength="342.500000" n="1.870000" kappa="1.310000" />
+  <entry wavelength="354.200012" n="1.890000" kappa="1.328000" />
+  <entry wavelength="367.899994" n="1.890000" kappa="1.370000" />
+  <entry wavelength="381.500000" n="1.920000" kappa="1.391000" />
+  <entry wavelength="397.399994" n="1.960000" kappa="1.398000" />
+  <entry wavelength="413.299988" n="2.000000" kappa="1.410000" />
+  <entry wavelength="430.500000" n="2.060000" kappa="1.408000" />
+  <entry wavelength="450.799988" n="2.110000" kappa="1.412000" />
+  <entry wavelength="471.399994" n="2.190000" kappa="1.397000" />
+  <entry wavelength="495.899994" n="2.250000" kappa="1.396000" />
+  <entry wavelength="520.900024" n="2.320000" kappa="1.392000" />
+  <entry wavelength="548.599976" n="2.390000" kappa="1.393000" />
+  <entry wavelength="582.099976" n="2.470000" kappa="1.389000" />
+  <entry wavelength="616.799988" n="2.510000" kappa="1.410000" />
+  <entry wavelength="659.500000" n="2.560000" kappa="1.426000" />
+  <entry wavelength="704.400024" n="2.620000" kappa="1.443000" />
+  <entry wavelength="756.000000" n="2.700000" kappa="1.448000" />
+  <entry wavelength="821.099976" n="2.830000" kappa="1.424000" />
+  <entry wavelength="891.900024" n="2.970000" kappa="1.407000" />
+</material>

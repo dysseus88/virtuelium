@@ -1,0 +1,72 @@
+<!--Default scenery, modify and enjoy it ;) -->
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="SimpleRenderer" maxdepth="4" scale="1.0"
+     globalphotonradius="1.0" nbglobalphotons="100000" nbglobalsamples="20"
+     causticphotonradius="20.0" nbcausticphotons="10000" nbcausticsamples="20"
+     nbsamples="10"  estimationdistance="5.0"
+  />
+  <camera filename="projects/DemoVirtuelium/images/Demo_Bump_01.png" resx="700" resy="510" >
+    <geometry type="Perspective" 
+       fov="13.0"
+       originx="0.5"  originy="0.0" originz="0.025"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.025"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+    />
+  </camera>
+
+  <medium name="gris" spectrum="projects/DemoVirtuelium/data/materials/cabine.xml" opaque="true"/>
+  <medium name="white" spectrum="data/materials/spectra/white.xml" opaque="true"/>
+  <medium name="or" indices="data/materials/metals/au.xml" opaque="true" />
+  <medium name="bleu" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" opaque="true"/>
+
+  <!-- Box -->
+  <surface name="Remibox_back">
+    <geometry type="OBJ" file="data/meshes/remibox/back.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_ceil">
+    <geometry type="OBJ" file="data/meshes/remibox/ceil.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_floor">
+    <geometry type="OBJ" file="data/meshes/remibox/floor.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_left">
+    <geometry type="OBJ" file="data/meshes/remibox/left.obj"   />
+    <medium name="gris"/>
+  </surface>
+  <surface name="Remibox_right">
+    <geometry type="OBJ" file="data/meshes/remibox/right.obj"   />
+    <medium name="gris"/>
+  </surface>
+
+  <!-- Box -->
+  <surface name="Earth">
+    <geometry type="Rotate" angle="120">
+      <geometry type="NormalMap" map="projects/DemoVirtuelium/data/textures/normal_4.png" global="false">
+        <geometry type="OBJ" file="data/meshes/tiles/tile_2mm.obj"/>
+      </geometry>
+    </geometry>
+    <medium name="bleu" />
+  </surface>
+
+  <!-- Source -->
+  <source name="Light">
+    <geometry type="OBJ" file="data/meshes/remibox/light.obj"   />
+    <source type="Plane"
+      spectrum="data/colorimetry/illuminants/D65.xml" power="1500"
+      ox="0.195" oy="-0.31" oz="0.47"
+      ux="0.39" vy="0.62" normalx="-1.0"
+      samples="30"
+    />
+  </source>
+  
+</scenery>
+
+
+

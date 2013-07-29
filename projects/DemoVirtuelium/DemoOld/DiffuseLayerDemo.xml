@@ -1,0 +1,60 @@
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+  <renderer type="PhotonMapping" scale="1.0" maxdepth="3" 
+     globalphotonradius="0.3" nbglobalphotons="8000" nbglobalsamples="20"
+     causticphotonradius="0.5" nbcausticphotons="10000" nbcausticsamples="60"
+     nbsamples="20"  estimationdistance="0.4"
+  />
+  <camera filename="projects/DemoVirtuelium/images/Diffuselayer.png" resx="2000" resy="1000">
+    <geometry type="Perspective" 
+       fov="16.0"
+       originx="10.0"  originy="-1.5" originz="0.0"
+       lookatx="0.0"  lookaty="0.0" lookatz="0.0"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE"
+      refobserver="data/observers/cie-xyz.xml"
+      conversionmat="data/observers/cie-xyz-to-rgb.txt"
+    />
+  </camera>
+
+  <medium name="default" indices="data/materials/glasses/Air.xml"/>
+  <medium name="boite" spectrum="projects/DemoVirtuelium/data/materials/cabine.xml" opaque="1"/>
+  <medium name="separateur" spectrum="projects/DemoVirtuelium/data/materials/gris.xml" transmittance="projects/DemoVirtuelium/data/materials/grisclair.xml" />
+
+  <!-- Box -->
+
+  <surface name="Box1">
+    <geometry type="OBJ" file="projects/DemoVirtuelium/data/meshes/diffuselayerdemo-box1.obj"   />
+    <medium name="boite"/>
+  </surface>
+
+  <surface name="Box2">
+    <geometry type="OBJ" file="projects/DemoVirtuelium/data/meshes/diffuselayerdemo-box2.obj"   />
+    <medium name="boite"/>
+  </surface>
+
+  <surface name="Separateur">
+    <geometry type="OBJ" file="projects/DemoVirtuelium/data/meshes/diffuselayerdemo-separator.obj"   />
+    <material type="Layered">
+      <layer medium="separateur" thickness="1E-3" />
+    </material>
+  </surface>
+
+  <!-- Source -->
+
+  <!--source name="Light A">
+    <geometry type="Sphere" radius="0.04" centerx="0.0" centery="-1.0" centerz="0.1" />
+    <source type="Point" radius="0.04"
+      spectrum="data/illuminants/A.xml" power="10000"
+      originx="0.0" originy="-1.0" originz="0.1"
+    />
+  </surface-->
+  <source name="Light D65">
+    <geometry type="Sphere" radius="0.04" centerx="0.0" centery="1.0" centerz="0.1" />
+    <source type="Point" radius="0.04"
+      spectrum="data/illuminants/D65.xml" power="10000"
+      originx="0.0" originy="1.0" originz="0.1"
+    />
+  </surface>
+</scenery>

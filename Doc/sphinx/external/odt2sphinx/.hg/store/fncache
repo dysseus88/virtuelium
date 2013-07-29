@@ -1,0 +1,7 @@
+data/.hgignore.i
+data/.hgtags.i
+data/ez_setup.py.i
+data/odt2sphinx/__init__.py.i
+data/odt2sphinx/odt2sphinx.py.i
+data/setup.cfg.i
+data/setup.py.i

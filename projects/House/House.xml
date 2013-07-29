@@ -1,0 +1,80 @@
+<scenery version="2" spectrum="data/wavelengths/virtuelium81.xml">
+
+ <!--
+  <renderer type="PhotonMapping" scale="1.0" maxdepth="6" 
+    globalphotonradius="1.0" nbglobalphotons="300000" nbglobalsamples="60"
+     causticphotonradius="1.0" nbcausticphotons="100000" nbcausticsamples="250"
+     nbsamples="250" estimationdistance="0.5"
+  />
+-->
+  <renderer type="SimpleRenderer" scale="1.0" maxdepth="6" 
+            ambientpower="0.01" ambientillum="data/colorimetry/illuminants/D65.xml"
+  >
+    <environment type="Spectral" spectrum="data/materials/spectra/pigments/lapislazuli1.xml" envpower="3.0" />
+  </renderer>
+  
+  <camera filename="<!--Nom-->" resx="1024" resy="748">
+    <geometry type="Perspective" 
+       fov="45.0"
+       originx="0.8"  originy="-4.0" originz="1.5"
+       lookatx="0.0"  lookaty="0.0" lookatz="0"
+       upx="0.0"      upy="0.0"     upz="1.0"
+    />
+    <colorhandler
+      type="CIE" refObserver="CIE_1964"
+      rgbProfile="data/colorimetry/rgb/sRGB_D65.txt"
+      illum="python/solar/SpectreReference.xml" refIllumOut="D65"
+    />
+  </camera>
+
+  <medium name="blanc"      spectrum="data/materials/spectra/white.xml"               opaque="1"/>
+  <medium name="vert"       spectrum="data/materials/spectra/green.xml"               opaque="1"/>
+  <medium name="rouge"      spectrum="data/materials/spectra/pigments/vermillon1.xml" opaque="1"/>
+  <medium name="darkBrown"  spectrum="data/materials/spectra/pierre.xml"              opaque="1"/>
+  <medium name="whiteBrown" spectrum="data/materials/spectra/pierre.xml"              opaque="1"/>
+  <medium name="bleu"       spectrum="data/materials/spectra/blue.xml"                opaque="1"/>
+
+
+  <surface name="floor">
+    <geometry type="OBJ" file="projects/House/data/meshes/floor.obj"/>
+    <medium name="whiteBrown"/>
+  </surface> 
+
+  <surface name="house_cheminey">
+    <geometry type="OBJ" file="projects/House/data/meshes/house_cheminey.obj"/>
+    <medium name="blanc"/>
+  </surface> 
+  <surface name="house_wall">
+    <geometry type="OBJ" file="projects/House/data/meshes/house_wall.obj"/>
+    <medium name="blanc"/>
+  </surface> 
+  <surface name="house_roof">
+    <geometry type="OBJ" file="projects/House/data/meshes/house_roof.obj"/>
+    <medium name="rouge"/>
+  </surface> 
+
+  <surface name="tree_trunk">
+    <geometry type="OBJ" file="projects/House/data/meshes/tree_trunk.obj"/>
+    <medium name="darkBrown"/>
+  </surface> 
+  <surface name="tree_leaf">
+    <geometry type="OBJ" file="projects/House/data/meshes/tree_leaf.obj"/>
+    <medium name="vert"/>
+  </surface> 
+
+  <surface name="rosace">
+    <geometry type="OBJ" file="projects/House/data/meshes/rosace.obj"/>
+    <medium name="bleu"/>
+  </surface> 
+  <surface name="north">
+    <geometry type="OBJ" file="projects/House/data/meshes/north.obj"/>
+    <medium name="rouge"/>
+  </surface> 
+
+
+<!--Lambda-->
+
+</scenery>
+
+
+

@@ -1,0 +1,358 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+---- Modifications apportées sur les sources de novembre 2011
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+13 décembre 2012: 
+
+Modif. Sources/Makefile (1)
+ 	CC=mpiCC
+devient
+	CC=mpic++ 
+
+Modif. Sources/Makefile (53-54)
+  virtuelium: ${COBJ} 
+  	${CC} ${CFLAGS}  ${CLIBS} ${COBJ} -o $@
+devient
+  virtuelium: ${COBJ} 
+  	${CC} ${CFLAGS} ${COBJ} ${CLIBS} -o $@
+
+Modif. Sources/src/io/mesh/MeshParser.cpp (115)
+  while( !input.eof()) 
+devient
+  while(input.good()) 
+
+--------------------------------------------------------------------------------
+		
+09 janvier 2013 :
+
+CMake windows 32 bits et linux
+Notes: sous windows, les librairies third parties (win32) sont fournies avec les 
+sources.
+
+--------------------------------------------------------------------------------
+		
+11 janvier 2013 :
+
+CMake windows 64 bits
+Notes: sous windows, les librairies third parties (win32, win64) sont fournies 
+avec les sources.
+
+Correction de la formule d'Oren-Nayar 
+Voir sources/include/physics/OrenNayarFormula.hpp (28)
+  Real B = 0.45 * (roughness*roughness)/(roughness*roughness + 0.009);
+devient   
+  Real B = 0.45 * (roughness*roughness)/(roughness*roughness + 0.09);
+
+Ajout d'une nouvelle méthode de calcul de Beckmann basée sur une vieille version
+de Virtuelium
+Voir sources/include/physics/BeckmannRoughnessFormula
+  Nouvelles méthodes (72-78)
+    static inline Real minimum(const Real& lhs, const Real& rhs);
+    static inline Real beckmann(const Real& LdotN, const Real& VdotN,  
+		                    	      const Real& LdotH, const Real& VdotH, 
+  	  	 	                      const Real& NdotH, const Real& Beck_mij);
+Voir implications dans 
+  sources/src/materials/BeckmannBRDF.cpp
+  sources/src/materials/BeckmannRefractiveBRDF.cpp
+
+Modifications importantes des fichiers sources/src/Main.cpp
+  Nouvelles gestions des arguments
+  Rendu par zones (option -area xmin:ymin:xmax:ymax)
+
+Les fichiers suivants ont également été modifiés pour prendre en compte le rendu 
+par zones (nouveaux attributs xmin, xmax, ymin, ymax)
+ sources/include/raytracers/*hpp
+ sources/src/raytracers/*cpp
+ sources/include/mpi/*hpp
+ sources/src/mpi/*cpp
+
+--------------------------------------------------------------------------------
+		
+18 janvier 2013 :
+
+Suppression des std::cout, std::cerr, std::fout etc..
+Et remplacement par des fonctions et structures de sdtio.h (printf, FILE etc...)
+
+Amélioration de certains affichages (erreur, warning, debug, messages du main 
+et de TaskManager)
+
+
+--------------------------------------------------------------------------------
+		
+23 janvier 2013 :
+
+CMakeList.txt principal modifié pour inclure de nouvelles options :
+_MSVC: warning (/Wall /WX)
+_GNU: Build type (Default cmake build as choices), 
+      warning (-pedantic, -Wall, -Wextra, -Werror)
+
+Suppression des warnings (gnu: -Wall -Wextra -ansi) dans fichiers :
+  _DielectricFormula.hpp (170): suppress unused vector nom
+
+  _SampleMaterial.cpp (43): new if to test the return of fscanf
+  
+  _Point2D.hpp (24) default initialisation in default constructor
+    inline Point2D(){}
+    devient
+    inline Point2D(){coord[0] = 0; coord[1] = 0;}
+
+  _V2ColorHandlerParser.hpp 
+    (46) ColorHandler* V2ColorHandlerParser::createSimpleRGBColorHandler(XMLTree* node)
+         devient 
+         ColorHandler* V2ColorHandlerParser::createSimpleRGBColorHandler(void)
+    (52) ColorHandler* V2ColorHandlerParser::createSpectrumColorHandler(XMLTree* node)
+         devient
+         ColorHandler* V2ColorHandlerParser::createSpectrumColorHandler(void)
+    ==> Conséquences dans V2ColorHandlerParser.cpp
+  
+  _V2ObjectShapeParser.hpp : suppress unused parameter of functions:
+    (47) ObjectShape* createNull(XMLTree* node);
+         devient
+         ObjectShape* createNull(void);
+    ==> Conséquences dans V2ObjectShapeParser.cpp
+              
+  _RoughVarnishedLambertianBRDF.cpp (getDiffuseReemited)
+    Modifier pour prendre en compte nouveau beckmann
+    
+  -BeckmannRefractiveBRDF.cpp (getDiffuseTransmitted)
+    Modifier pour prendre en compte nouveau beckmann
+      
+  _BeckmannRoughnessFormula.hpp (76 et 90) 
+    static inline Real beckmann(const Real& LdotN, 
+                                const Real& VdotN,  
+                                const Real& LdotH, ccommenté
+                                const Real& VdotH, 
+                                const Real& NdotH, 
+                                const Real& Beck_mij);
+    ==> Conséquences dans BeckmanBRDF.cpp and BeckmannRefractiveBRDF.cpp 
+        and RoughVarnishedLambertianBRDF.cpp
+
+  _Image.hpp (125)
+      void Image::setPixel(unsigned int x, unsigned int y, const Pixel& pixel)
+      devient 
+      void Image::setPixel(int x, int y, const Pixel& pixel)
+    ==> Conséquences dans Image.cpp
+    
+--------------------------------------------------------------------------------
+
+24 janvier 2013 :
+
+Refonte et mise au propre de la classe V2RendererParser
+Refonte et mise au propre des classes de Rendering
+
+Ajout de fonction  getDiffuseReemitedFromAmbiant  pour chaque matériau
+ Le code des fonctions est a adapté en fonction des matériaux
+ Suppression dans SimpleRenderer.cpp (93) du cas rayon vers l'infini :
+   C'est à l'environment map ou au spectre de fond de le faire. 
+
+Pour le moment, les fonctions renvoient un lighData vide.
+   
+--------------------------------------------------------------------------------
+
+01 février 2013 :
+
+Création d'une maquette numérique à l'échelle de cabine à lumière 
+data/meshes/remibox
+
+Création d'une plaquette à l'échelle et d'épaisseur évoluant par pas de 500µm
+data/meshes/tiles
+
+--------------------------------------------------------------------------------
+
+04 février 2013 :
+
+Transformation de l'espace : homothétie (class Scale) v 1.0
+Bug non encore résolu pour la rotation et l'homothétie
+
+--------------------------------------------------------------------------------
+
+06 février 2013 :
+
+Ajout de fonctionalités de textures
+ - structures/Textures : class SampleColor, class SampleSegment, 
+                         class SampleArea, class ReferenceSample, 
+                         class Texture
+                         
+ - materials/TextureBRDF v 1.0
+   Ne gère pas encore tous les cas (matériau réfringeant).
+   
+--------------------------------------------------------------------------------
+
+07 février 2013 :
+
+Class Transformation v 1.0
+Non terminé ; doit régler les problèmes repérés le 04 février 2013
+
+--------------------------------------------------------------------------------
+
+13 février 2013 :
+
+Suppression des parsers de type V1
+
+Ajout d'une architecture pour l'Environment mapping
+  Création de nouveaux fichiers
+    include/environments/Environment.hpp          (base)
+    include/environments/SphericalEnvironment.hpp (Sphere mapping)
+    include/environments/SpectralEnvironment.hpp  (Uniform spectrum as envir.)
+    src/environments/Environment.cpp
+    src/environments/SphericalEnvironment.cpp
+    src/environments/SpectralEnvironment.cpp
+  Modifications du parsing
+    Création de nouveaux fichiers
+      include/io/SceneryV2/V2EnvironmentParser.hpp (idée: <environment> sous-noeud de <renderer>)
+      src/io/SceneryV2/V2EnvironmentParser.cpp
+    Intégration
+      Modif. V2SceneryParser pour prise en compte de la liste de textures dans fonction assRenderer
+      Modif. V2RendererParser pour 
+        - prise en compte de la liste de textures comme paramètres
+        - appel à V2EnvironmentParser                    
+      Modif. classes SimpleRenderer et PhotonMapping pour création et appel d'un objet de type "Environment"
+
+--------------------------------------------------------------------------------
+
+14 février 2013 :
+
+Nouveaux fichiers de démo
+
+--------------------------------------------------------------------------------
+
+19 février 2013 :
+
+Fichier main.cpp relooké : nouvelles options (area, debug)
+
+--------------------------------------------------------------------------------
+
+20 février 2013 :
+
+Gestion de l'éclairage ambiant : Ajout de nouvelles fonctions 
+getDiffuseReemitedFromAmbiant() dans les matériaux
+  => Limitation : pas de prise en compte de l'angle
+  => vers ambient occlusion ?
+  
+--------------------------------------------------------------------------------
+
+26 février 2013 :
+
+Ajout d'un matériau ConcentrationMap : non terminé
+
+--------------------------------------------------------------------------------
+
+7 mars 2013 :
+
+Modification de main.cpp en Virtuelium.hpp et Virtuelium.cpp. Transformation 
+sous forme d'une classe C++
+
+--------------------------------------------------------------------------------
+
+8 mars 2013 :
+
+Création d'un moteur de rendu de test: TestRenderer
+  ==> Appelable via mot clé 'Test'
+  ==> Force le spectre calculé à être toujours le même; cour-circuite certains 
+      l'influence des matériaux pour ne conserver que celles la géométrie et de 
+      la structure accélératrice (actuellement octree, plans pour passer en bvh)
+
+--------------------------------------------------------------------------------
+
+11 mars 2013 :
+
+Réécriture de la parallélisation MPI (v1),suppression de la partie Posix thread:
+  ==> suppresion des classes TcpIpPSocket, 
+                             ComputingUnit, ComputingServer
+                             MPI_MasterSlave
+                             Session
+  ==> suppression des librairies externes : pthread et ws_socket32
+  ==> ajout des classes MPIServer et MPIClient
+  
+--------------------------------------------------------------------------------
+
+15 mars 2013 :
+
+Refonte du convertisseur colorimétrique 'CIE'
+  ==> La classe CIEColorHandler a été entière revue pour :
+        - une meilleure gestion de la conversion Spectre => XYZ => RGB
+        - l'intégration de différents méthodes d'adaptation chromatique :
+            - XYZ Scaling
+            - Bradford
+            - Von Kries
+            - CIECAT02
+        - de nouveaux paramètres
+  ==> La classe CIEChromaAdapt a été supprimée
+  ==> La classe V2ColorHandlerParser a été mise à jour.
+  ==> La classe MathParser a été modifié pour que les fichiers de matrice
+      puisse avoir des lignes des commentaires
+
+De nouveaux fichiers de colorimétrie ont été ajouté dans data/colorimetry
+  - illuminants (A, D50, D55, D65, D75, E, illuminats F)
+  - observateur colorimétrique CIE_1931 et CIE_1964
+  - matrice de conversion XYZ vers RVB : sRGB, WideGamut, AdobeRGB etc...
+  
+Mise à jour des fichiers de scènes.
+  
+--------------------------------------------------------------------------------
+
+19 mars 2013 :
+
+Création de la classe VrtLog permettant d'écrire les sorties de chaque processus 
+MPI dans un fichier log séparé.
+
+--------------------------------------------------------------------------------
+
+21 mars 2013 :
+ 
+Matériau "AlloyBRDF" version béta.
+Ce matériau permet la simulation des aliages binaires par interpolation des 
+fonctions dielectriques complexes des métaux
+
+--------------------------------------------------------------------------------
+
+12 avril 2013 :
+
+Ajout du modèle de Ward pour les matériaux rugueux anisotropes (version béta)
+
+--------------------------------------------------------------------------------
+
+8 mai 2013 :
+
+Nouvelle stratégies de calcul de l'image. 
+  Basée sur la notion de Task Unit. Une unité de calcul (TaskUnit) représente 
+  une sous-zone de l'image calculée par un processus openMP pour une itération.
+  L'unité de calcul est défini en tant que boite englobante rectangulaire, 
+  pleinement paramétrable. Dans la version client-server, puisque le cas idéal
+  recherché est celui ou il n'y a qu'un processus MPI par noeud du cluster
+  dirigeant des processus OpenMP locaux, les unités de calcul sont regroupés en 
+  blocs de calculs (TaskBock). Un bloc de calcul correspond à un ensemble 
+  d'unités de calcul rendues par un noeud MPI pour une itération.  
+Anciens fichiers des répertoires "mpi" et "raytracers" rendu obsolètes
+Création d'un nouveau répertoire "core" 
+  Contient les fichiers qui auparavant étaient à la racine (la classe 
+    "Virtuelium" a été séparée du fichier "main.cpp", seul restant à la racine).
+  Création des fichiers dans le répertoire "taskmanager"
+    TaskManagerBase.[hpp | cpp] : Classe mère pour la planification des tâches 
+      Chaque nouveau Task Manager doit hériter de cette classe
+    TaskManagerLine.[hpp | cpp] : Planifie le calcul de l'image lignes par 
+      lignes ou colonnes par colonnes
+    TaskManagerSpiral.[hpp | cpp] : Planifie le calcul de l'image selon un motif
+      de spiral partant du centre
+  Création des fichiers dans le répertoire "taskexecutor"
+    TaskExecutorBase.[hpp | cpp] : Classe mère pour me contrôle du rendu de 
+      l'image . Chaque noveau Task Executor doit hériter de cette classe
+    StandAloneExecutor.[hpp | cpp] : Execution OpenMP sur un seul ordinateur
+    ClientServerExecutor.[hpp  | cpp] : Execution hybride MPI + OpenMP sur un 
+      cluster de CPU. Image pour le moment fragmentée 
+Remaniement complet des arguments de la commande 'virtuelium' en utilisant la 
+librairie tclap (templated command line argument parser)
+
+et Sun.cpp -------------------------------------------------------------------------
+
+21 juillet 2013 :
+
+Source de lumiere soleil (Sun.hpp)
+
+  
+
+
+
+
