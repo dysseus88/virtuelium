@@ -28,6 +28,6 @@ while curAngleDegree <= maxDegree :
     
 genererScenes("./projects/DynamicCamera/DynamicCamera.xml", xmls)
     
-calculerScenes("./projects/DynamicCamera/DynamicCamera.xml", N)
+calculerScenes("./projects/DynamicCamera/DynamicCamera.xml", N, mt=4)
 
 
