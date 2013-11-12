@@ -1,0 +1,9 @@
+# No .exe files
+*.exe
+*.dll
+*.pyc
+
+# Hidden system files
+.DS_Store
+
+
