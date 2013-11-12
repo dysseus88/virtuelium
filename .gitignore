@@ -6,10 +6,4 @@
 # Hidden system files
 .DS_Store
 
-# Directory tests with one exception
-projects/CornelBox/images/*
-projects/DemoVirtuelium/images/*
-projects/DynamicCamera/images/*
-projects/DynamicCamera/scenesAnimation/*
-projects/House/images/*
-projects/House/scenesAnimation/*
+
